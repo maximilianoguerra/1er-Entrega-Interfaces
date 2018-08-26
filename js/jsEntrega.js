@@ -69,3 +69,23 @@ ctx.putImageData(imageData,10,10);
     imageData.data[index+3]=a;
 
   };
+  $(document).on('submit','.formFiltrar', function(event){
+  event.preventDefault();
+  let image1 = new Image();
+  var file    = document.querySelector('input[type=file]').files[0];
+  var reader  = new FileReader();
+  reader.onloadend = function () {
+    image1.src = reader.result;
+  }
+  if (file) {
+    reader.readAsDataURL(file);
+  } else {
+    preview.src = "";
+  }
+  image1.onload = function(){
+    myDrawImageMethod(this);
+  };
+  });
+function myDrawImageMethod(image) {
+  ctx.drawImage(image,0,0,700,700);
+};
