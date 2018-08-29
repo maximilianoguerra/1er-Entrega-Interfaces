@@ -7,17 +7,8 @@ function cambiarALapiz() {
   document.body.style.cursor =  "url(img/lapiz32p.png),auto";
   canvas.addEventListener('mousemove', function(event) {
       let imageData = ctx.getImageData(0,0,1000,1000);
-      setPixel(imageData,event.layerX,event.layerY,0,0,0,255);
-      setPixel(imageData,event.layerX,event.layerY-1,0,0,0,255);
-      setPixel(imageData,event.layerX,event.layerY+1,0,0,0,255);
-      setPixel(imageData,event.layerX-1,event.layerY,0,0,0,255);
-      setPixel(imageData,event.layerX-1,event.layerY-1,0,0,0,255);
-      setPixel(imageData,event.layerX-1,event.layerY+1,0,0,0,255);
-      setPixel(imageData,event.layerX+1,event.layerY,0,0,0,255);
-      setPixel(imageData,event.layerX+1,event.layerY-1,0,0,0,255);
-      setPixel(imageData,event.layerX+1,event.layerY+1,0,0,0,255);
-      ctx.putImageData(imageData,0,0);
-
+      ctx.fillStyle="#0A0A0A0";
+      ctx.fillRect(event.layerX, event.layerY+20, 16, 16);
     }, false);
 }
 $(document).on('click','#goma',function (event) {
@@ -28,15 +19,11 @@ function cambiarAGoma() {
   document.body.style.cursor =  "url(img/goma-de-borrar32p.png),auto";
   canvas.addEventListener('mousemove', function(event) {
       let imageData = ctx.getImageData(0,0,1000,1000);
-      setPixel(imageData,event.layerX,event.layerY,255,255,255,255);
-      setPixel(imageData,event.layerX,event.layerY-1,255,255,255,255);
-      setPixel(imageData,event.layerX,event.layerY+1,255,255,255,255);
-      setPixel(imageData,event.layerX-1,event.layerY,255,255,255,255);
-      setPixel(imageData,event.layerX-1,event.layerY-1,255,255,255,255);
-      setPixel(imageData,event.layerX-1,event.layerY+1,255,255,255,255);
-      setPixel(imageData,event.layerX+1,event.layerY,255,255,255,255);
-      setPixel(imageData,event.layerX+1,event.layerY-1,255,255,255,255);
-      setPixel(imageData,event.layerX+1,event.layerY+1,255,255,255,255);
+      ctx.fillStyle="#FFFFFF";
+      ctx.fillRect(event.layerX, event.layerY+20, 16, 16);
+      for (var i = 0; i < array.length; i++) {
+        setPixel(imageData,i,i,255,255,255,255);
+      }
       ctx.putImageData(imageData,0,0);
 
     }, false);
@@ -49,17 +36,6 @@ for (var x = 0; x < imageData.width; x++) {
   }
 };
 ctx.putImageData(imageData,10,10);
-// function myDrawImageMethod(image) {
-//   ctx.drawImage(image,0,0,700,700);
-// };
-// let image1 = new Image();
-// image1.src="enBlanco.png"
-// image1.onload = function(){
-//   myDrawImageMethod(this);
-//   let imageData = ctx.getImageData(0,0,700,700);
-//   // tonos(imageData);
-//   ctx.putImageData(imageData,0,0);
-// };
 
   function setPixel(imageData,x,y,r,g,b,a) {
     index = (x + y * imageData.width) * 4;
@@ -87,5 +63,33 @@ ctx.putImageData(imageData,10,10);
   };
   });
 function myDrawImageMethod(image) {
-  ctx.drawImage(image,0,0,700,700);
+  ctx.drawImage(image,0,0,1000,1000);
 };
+$(document).on('click','#FilBrillo',function (event) {
+  event.preventDefault();
+  filtroBrillo();
+});
+function filtroBrillo(){
+  let imageData = ctx.getImageData(0,0,1000,1000);
+  for (var x = 0; x < 1000; x++) {
+    for (var y = 0; y < 1000; y++) {
+    let rgb = getPixel(imageData,x,y);
+    let pixelMod = brillo(rgb);
+    setPixel(imageData,x,y,pixelMod[0],pixelMod[1],pixelMod[2],255);
+    }
+  }
+  ctx.putImageData(imageData,0,0);
+}
+function getPixel(imageData,x,y) {
+  let index = (x + y * imageData.width) * 4;
+  let red = imageData.data[index+0];
+  let green = imageData.data[index+1];
+  let blue = imageData.data[index+2];
+  return [red,green,blue];
+}
+function brillo(rgb){
+  rgb[0]=rgb[0]+(rgb[0]/100)*10;
+  rgb[1]=rgb[1]+(rgb[1]/100)*10;
+  rgb[2]=rgb[2]+(rgb[2]/100)*10;
+  return rgb;
+}
