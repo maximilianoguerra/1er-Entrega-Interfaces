@@ -107,6 +107,11 @@ $(document).on('click','#FilGris',function (event) {
   let filtro = new FiltroGris();
   filtro.filtroImg();
 });
+$(document).on('click','#FilBordes',function (event) {
+  event.preventDefault();
+  let filtro = new FiltroDetectBordes();
+  filtro.filtroImg();
+});
 class  Filtro {
   Filtro() {
 
@@ -174,6 +179,50 @@ class FiltroGris extends Filtro{
     return [promedio,promedio,promedio];
   }
 }
+class FiltroDetectBordes {
+  // let mascara = [-1,0,1]
+  FiltroDetectBordes() {}
+  filtroImg() {
+
+    // let filtro = new FiltroGris();
+    // filtro.filtroImg();
+    let imageData = ctx.getImageData(0,0,canvasWidth,canvasWidth);
+    let imagencopia = this.cloneImage();
+    for (var x = 0; x < canvasWidth; x++) {
+      for (var y = 0; y < canvasWidth; y++) {
+        let rgb1 = getPixel(imageData,x-1,y);
+        let rgb2 = getPixel(imageData,x+1,y);
+        let rgb3 = getPixel(imageData,x-1,y-1);
+        let rgb4 = getPixel(imageData,x+1,y+1);
+        let rgb5 = getPixel(imageData,x-1,y+1);
+        let rgb6 = getPixel(imageData,x+1,y-1);
+        let resultado = (rgb1[0]*-1)+(rgb2[0]*1)+(rgb3[0]*-1)+(rgb4[0]*1)+(rgb5[0]*-1)+(rgb6[0]*1);
+        if (resultado<0) {
+          resultado=resultado*-1;
+        }
+
+        setPixel(imagencopia,x,y,resultado,resultado,resultado,255)
+
+
+      }
+    }
+    ctx.putImageData(imagencopia,0,0);
+  }
+  cloneImage(){
+    let imageData = ctx.getImageData(0,0,canvasWidth,canvasWidth);
+    let copia= ctx.createImageData(1000,1000);
+    for (var x = 0; x < canvasWidth; x++) {
+      for (var y = 0; y < canvasWidth; y++) {
+        let rgb =getPixel(imageData ,x,y);
+        setPixel(copia,x,y,rgb[0],rgb[1],rgb[2],255)
+      }
+    }
+    return copia;
+  }
+  filterType(rgb){
+
+  }
+}
 function getPixel(imageData,x,y) {
   let index = (x + y * imageData.width) * 4;
   let red = imageData.data[index+0];
@@ -181,7 +230,26 @@ function getPixel(imageData,x,y) {
   let blue = imageData.data[index+2];
   return [red,green,blue];
 }
-
+// for (var x = 0; x < canvasWidth; x++) {
+//   for (var y = 0; y < canvasWidth; y++) {
+//     let rgb1 = getPixel(imageData,x-1,y);
+//     let rgb2 = getPixel(imageData,x+1,y);
+//     let rgb3 = getPixel(imageData,x-1,y-1);
+//     let rgb4 = getPixel(imageData,x+1,y+1);
+//     let rgb5 = getPixel(imageData,x-1,y+1);
+//     let rgb6 = getPixel(imageData,x+1,y-1);
+//     let resultado = (rgb1[0]*-1)+(rgb2[0]*1)+(rgb3[0]*-1)+(rgb4[0]*1)+(rgb5[0]*-1)+(rgb6[0]*1);
+//     if (resultado<0) {
+//       resultado=resultado*-1;
+//     }
+//
+//     setPixel(imageData,x,y,resultado,resultado,resultado,255)
+//
+//
+//   }
+// }
+// ctx.putImageData(imageData,0,0);
+// }
 // function onMouseMove(event) {
 //   si hay PuntoANTERIOR
 //   ctx.be
