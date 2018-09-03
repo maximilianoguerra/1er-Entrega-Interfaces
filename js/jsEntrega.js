@@ -1,5 +1,5 @@
-var canvasWidth = 1000;
-var canvasHeight = 1000;
+var canvasWidth = 700;
+var canvasHeight = 700;
 var imageBackup = new Image();
 $(document).on('click','#lapiz',function (event) {
   event.preventDefault();
@@ -178,27 +178,24 @@ class FiltroDetectBordes {
   // let mascara = [-1,0,1]
   FiltroDetectBordes() {}
   filtroImg() {
-
     let filtro = new FiltroGris();
     filtro.filtroImg();
     let imageData = ctx.getImageData(0,0,canvasWidth,canvasWidth);
     let imagencopia = this.cloneImage(imageData);
     for (var x = 0; x < canvasWidth; x++) {
       for (var y = 0; y < canvasWidth; y++) {
-        let rgb1 = getPixel(imageData,x-1,y);
-        let rgb2 = getPixel(imageData,x+1,y);
-        let rgb3 = getPixel(imageData,x-1,y-1);
-        let rgb4 = getPixel(imageData,x+1,y+1);
-        let rgb5 = getPixel(imageData,x-1,y+1);
-        let rgb6 = getPixel(imageData,x+1,y-1);
-        let resultado = (rgb1[0]*-1)+(rgb2[0]*1)+(rgb3[0]*-1)+(rgb4[0]*1)+(rgb5[0]*-1)+(rgb6[0]*1);
-        if (resultado<0) {
-          resultado=resultado*-1;
-        }
-
+        let z4 = getPixel(imageData,x-1,y);      //{z1,z2,z3}     [{-1,0,1}      [{-1,-2,-1}
+        let z1 = getPixel(imageData,x-1,y-1);    //{z4,z5,z6}  Gx= {-2,0,2}   Gy={0 , 0, 0}
+        let z7 = getPixel(imageData,x-1,y+1);    //{z7,z8,z9}      {-1,0,1}]     {1 , 2, 1}]
+        let z6 = getPixel(imageData,x+1,y);
+        let z9 = getPixel(imageData,x+1,y+1);
+        let z3 = getPixel(imageData,x+1,y-1);
+        let z2 = getPixel(imageData,x,y-1);
+        let z8 = getPixel(imageData,x,y+1);
+        let resultadoy = (z2[0]*-2)+(z8[0]*2)+(z1[0]*-1)+(z7[0]*1)+(z3[0]*-1)+(z9[0]*1);
+        let resultadox = (z1[0]*-1)+(z4[0]*-2)+(z7[0]*-1)+(z3[0]*1)+(z6[0]*2)+(z9[0]*1);
+        let resultado = Math.sqrt(Math.pow(resultadox,2)+Math.pow(resultadoy,2));
         setPixel(imagencopia,x,y,resultado,resultado,resultado,255)
-
-
       }
     }
     ctx.putImageData(imagencopia,0,0);
