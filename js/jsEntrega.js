@@ -1,52 +1,87 @@
-var canvasWidth = 700;
-var canvasHeight = 700;
-var imageBackup = new Image();
+let canvasWidth = 700;
+let canvasHeight = 700;
+let imageBackup = new Image();
+//variables para Paint
+let pintar = false;
+let borrar = false;
+let xIni;
+let yIni;
+let xFin;
+let yFin;
+let lapiz=false;
+let goma=false;
+let color;
+let widthLine;
+let ajustX;
+let ajustY;
+//fin
+//Funcionalidad paint
 $(document).on('click','#lapiz',function (event) {
   event.preventDefault();
   cambiarALapiz();
 });
 function cambiarALapiz() {
   document.body.style.cursor =  "url(img/lapiz32p.png),auto";
-  canvas.addEventListener('mousemove', function(event) {
-      let imageData = ctx.getImageData(0,0,canvasWidth,canvasWidth);
-      ctx.fillStyle="#0A0A0A0";
-      ctx.fillRect(event.layerX, event.layerY+20, 16, 16);
-    }, false);
+  lapiz=true;
+  goma=false;
 }
+canvas.addEventListener('mousedown', function(event) {
+  pintar=true;
+  if (lapiz) {
+    color="#0A0A0A";
+    widthLine=2;
+    ajustX =7;
+    ajustY=22;
+  }else if (goma) {
+    color="#FFFFFF";
+    widthLine=5;
+    ajustX =0;
+    ajustY=22;
+  }
+  xIni = event.clientX-ajustX;
+  yIni = event.clientY+ajustY;
+}, false);
+canvas.addEventListener('mousemove', function(event){
+  if (pintar) {
+          xFin = event.clientX-ajustX;
+          yFin = event.clientY+ajustY;
+          ctx.beginPath();
+          ctx.moveTo(xIni, yIni);
+          ctx.lineTo(xFin, yFin);
+          ctx.lineWidth = widthLine;
+          ctx.strokeStyle = color;
+          xIni = xFin;
+          yIni = yFin;
+          ctx.stroke();
+        }
+}, false);
+canvas.addEventListener('mouseup', function(event){
+  pintar = false;
+}, false);
 $(document).on('click','#goma',function (event) {
   event.preventDefault();
   cambiarAGoma();
 });
 function cambiarAGoma() {
   document.body.style.cursor =  "url(img/goma-de-borrar32p.png),auto";
-  canvas.addEventListener('mousemove', function(event) {
-      let imageData = ctx.getImageData(0,0,canvasWidth,canvasWidth);
-      ctx.fillStyle="#FFFFFF";
-      ctx.fillRect(event.layerX, event.layerY+20, 16, 16);
-      for (var i = 0; i < array.length; i++) {
-        setPixel(imageData,i,i,255,255,255,255);
-      }
-      ctx.putImageData(imageData,0,0);
-
-    }, false);
+  goma=true;
+  lapiz=false;
 }
+//Fin funcionalidad Paint
 var ctx = document.getElementById("canvas").getContext("2d");
 let imageData = ctx.createImageData(canvasWidth,canvasWidth);
-for (var x = 0; x < imageData.width; x++) {
-  for (var y = 0; y < imageData.width; y++) {
-    setPixel(imageData,x,y,255,255,255,255);
+canvasWithe(imageData);
+function canvasWithe(imageData) {
+  for (var x = 0; x < imageData.width; x++) {
+    for (var y = 0; y < imageData.width; y++) {
+      setPixel(imageData,x,y,255,255,255,255);
+    }
   }
-};
-ctx.putImageData(imageData,0,0);
+  ctx.putImageData(imageData,0,0);
+}
 
-  function setPixel(imageData,x,y,r,g,b,a) {
-    index = (x + y * imageData.width) * 4;
-    imageData.data[index+0]=r;
-    imageData.data[index+1]=g;
-    imageData.data[index+2]=b;
-    imageData.data[index+3]=a;
 
-  };
+//Manejo de imagenes
 $(document).on('submit','.formFiltrar', function(event){
       event.preventDefault();
       let image1 = new Image();
@@ -68,6 +103,8 @@ $(document).on('submit','.formFiltrar', function(event){
       return image1;
   });
 function myDrawImageMethod(image) {
+  let imageData = ctx.createImageData(canvasWidth,canvasWidth);
+  canvasWithe(imageData)
   if(image.width<canvasWidth && image.height<1000){
     ctx.drawImage(image,0,0,image.width,image.height);
   }else if (canvasWidth < image.width && 1000 < image.height) {
@@ -80,37 +117,43 @@ function myDrawImageMethod(image) {
 };
 $(document).on('click','#Restaurar',function (event) {
   event.preventDefault();
+  canvasWithe(imageData);
   myDrawImageMethod(imageBackup);
 });
 $(document).on('click','#FilBrillo',function (event) {
   event.preventDefault();
-  let  filtro = new FiltroBrillo();
-  filtro.filtroImg();
+  filtroBrillo.filtroImg();
 });
 $(document).on('click','#FilNegativo',function (event) {
   event.preventDefault();
-  let filtro = new FiltroNegativo();
-  filtro.filtroImg();
+  filtroNegativo.filtroImg();
 });
 $(document).on('click','#FilBinario',function (event) {
   event.preventDefault();
-  let filtro = new FiltroBinario();
-  filtro.filtroImg();
+  filtroBinario.filtroImg();
 });
 $(document).on('click','#FilSepia',function (event) {
   event.preventDefault();
-  let filtro = new FiltroSepia();
-  filtro.filtroImg();
+  filtroSepia.filtroImg();
 });
 $(document).on('click','#FilGris',function (event) {
   event.preventDefault();
-  let filtro = new FiltroGris();
-  filtro.filtroImg();
+  filtroGris.filtroImg();
 });
 $(document).on('click','#FilBordes',function (event) {
   event.preventDefault();
-  let filtro = new FiltroDetectBordes();
-  filtro.filtroImg();
+  filtroGris.filtroImg();
+  filtroDetectBordes.filtroImg();
+});
+$(document).on('click','#FilBlur',function (event) {
+  event.preventDefault();
+  filtroBlur.filtroImg();
+});
+$(document).on('click','#guardarImg',function (event) {
+  // event.preventDefault();
+  var canvas = $("#canvas")[0];
+  var imagen = canvas.toDataURL("image/png");
+  this.href = imagen;
 });
 class  Filtro {
   Filtro() {}
@@ -136,6 +179,8 @@ class FiltroBrillo extends Filtro{
     return rgb;
   }
 }
+let  filtroBrillo = new FiltroBrillo();
+
 class FiltroNegativo extends Filtro{
   FiltroNegativo() {}
   filterType(rgb) {
@@ -145,6 +190,8 @@ class FiltroNegativo extends Filtro{
     return rgb;
   }
 }
+let filtroNegativo = new FiltroNegativo();
+
 class FiltroBinario extends Filtro{
   FiltroBinario() {}
   filterType(rgb) {
@@ -157,6 +204,7 @@ class FiltroBinario extends Filtro{
     return [binario,binario,binario];
   }
 }
+let filtroBinario = new FiltroBinario();
 class FiltroSepia extends Filtro {
   FiltroSepia() {}
   filterType(rgb){
@@ -166,6 +214,8 @@ class FiltroSepia extends Filtro {
     return [red,green,blue];
   }
 }
+let filtroSepia = new FiltroSepia();
+
 class FiltroGris extends Filtro{
   FiltroGris() {}
   filterType(rgb) {
@@ -174,46 +224,65 @@ class FiltroGris extends Filtro{
     return [promedio,promedio,promedio];
   }
 }
-class FiltroDetectBordes {
-  // let mascara = [-1,0,1]
-  FiltroDetectBordes() {}
+let filtroGris = new FiltroGris();
+class FiltroAvanzados {
+  FiltroAvanzados() {}
   filtroImg() {
-    let filtro = new FiltroGris();
-    filtro.filtroImg();
     let imageData = ctx.getImageData(0,0,canvasWidth,canvasWidth);
-    let imagencopia = this.cloneImage(imageData);
+    let imagencopia = cloneImage(imageData);
     for (var x = 0; x < canvasWidth; x++) {
       for (var y = 0; y < canvasWidth; y++) {
-        let z4 = getPixel(imageData,x-1,y);      //{z1,z2,z3}     [{-1,0,1}      [{-1,-2,-1}
-        let z1 = getPixel(imageData,x-1,y-1);    //{z4,z5,z6}  Gx= {-2,0,2}   Gy={0 , 0, 0}
-        let z7 = getPixel(imageData,x-1,y+1);    //{z7,z8,z9}      {-1,0,1}]     {1 , 2, 1}]
+        let z1 = getPixel(imageData,x-1,y-1);  //{z1,z2,z3}
+        let z2 = getPixel(imageData,x,y-1);    //{z4,z5,z6}
+        let z3 = getPixel(imageData,x+1,y-1);  //{z7,z8,z9}
+        let z4 = getPixel(imageData,x-1,y);
+        let z5 = getPixel(imageData,x,y);
         let z6 = getPixel(imageData,x+1,y);
-        let z9 = getPixel(imageData,x+1,y+1);
-        let z3 = getPixel(imageData,x+1,y-1);
-        let z2 = getPixel(imageData,x,y-1);
         let z8 = getPixel(imageData,x,y+1);
-        let resultadoy = (z2[0]*-2)+(z8[0]*2)+(z1[0]*-1)+(z7[0]*1)+(z3[0]*-1)+(z9[0]*1);
-        let resultadox = (z1[0]*-1)+(z4[0]*-2)+(z7[0]*-1)+(z3[0]*1)+(z6[0]*2)+(z9[0]*1);
-        let resultado = Math.sqrt(Math.pow(resultadox,2)+Math.pow(resultadoy,2));
-        setPixel(imagencopia,x,y,resultado,resultado,resultado,255)
+        let z7 = getPixel(imageData,x-1,y+1);
+        let z9 = getPixel(imageData,x+1,y+1);
+        let matPixel = [z1,z2,z3,z4,z5,z6,z7,z8,z9]
+        let resultado = this.getPixelWithFilter(matPixel,x,y);
+        setPixel(imagencopia,x,y,resultado[0],resultado[1],resultado[2],255)
       }
     }
     ctx.putImageData(imagencopia,0,0);
   }
-  cloneImage(imageData){
-    let copia= ctx.createImageData(1000,1000);
-    for (var x = 0; x < canvasWidth; x++) {
-      for (var y = 0; y < canvasWidth; y++) {
-        let rgb =getPixel(imageData ,x,y);
-        setPixel(copia,x,y,rgb[0],rgb[1],rgb[2],255)
-      }
+}
+class FiltroDetectBordes extends FiltroAvanzados{
+  // let mascara = [-1,0,1]
+  FiltroDetectBordes() {}
+  getPixelWithFilter(matPixel){
+    let matConvolucionX = [-1,0,1,-2,0,2,-1,0,1]
+    let matConvolucionY = [-1,-2,-1,0,0,0,1,2,1]
+    let resultadoy=0;
+    let resultadox=0;
+    let aux;
+    for (var i = 0; i < matPixel.length; i++) {
+      aux = matPixel[i];
+      resultadox+=(aux[0]*matConvolucionX[i]);
+      resultadoy+=(aux[0]*matConvolucionY[i]);
     }
-    return copia;
-  }
-  filterType(rgb){
-
+    let resultado = Math.sqrt(Math.pow(resultadox,2)+Math.pow(resultadoy,2));
+    return [resultado,resultado,resultado];//retorno de esta manera para poder trabajar con polimorfismo
   }
 }
+let filtroDetectBordes = new FiltroDetectBordes();
+
+class FiltroBlur extends FiltroAvanzados{
+  FiltroBlur() {}
+  getPixelWithFilter(matPixel){
+    let blur=[0,0,0];
+    for (var i = 0; i < matPixel.length; i++) {
+      blur[0]=blur[0]+matPixel[i][0]/9;
+      blur[1]=blur[1]+matPixel[i][1]/9;
+      blur[2]=blur[2]+matPixel[i][2]/9;
+    }
+    return blur;
+  }
+}
+let filtroBlur = new FiltroBlur();
+
 function getPixel(imageData,x,y) {
   let index = (x + y * imageData.width) * 4;
   let red = imageData.data[index+0];
@@ -221,27 +290,23 @@ function getPixel(imageData,x,y) {
   let blue = imageData.data[index+2];
   return [red,green,blue];
 }
-// for (var x = 0; x < canvasWidth; x++) {
-//   for (var y = 0; y < canvasWidth; y++) {
-//     let rgb1 = getPixel(imageData,x-1,y);
-//     let rgb2 = getPixel(imageData,x+1,y);
-//     let rgb3 = getPixel(imageData,x-1,y-1);
-//     let rgb4 = getPixel(imageData,x+1,y+1);
-//     let rgb5 = getPixel(imageData,x-1,y+1);
-//     let rgb6 = getPixel(imageData,x+1,y-1);
-//     let resultado = (rgb1[0]*-1)+(rgb2[0]*1)+(rgb3[0]*-1)+(rgb4[0]*1)+(rgb5[0]*-1)+(rgb6[0]*1);
-//     if (resultado<0) {
-//       resultado=resultado*-1;
-//     }
-//
-//     setPixel(imageData,x,y,resultado,resultado,resultado,255)
-//
-//
-//   }
-// }
-// ctx.putImageData(imageData,0,0);
-// }
-// function onMouseMove(event) {
-//   si hay PuntoANTERIOR
-//   ctx.be
-// }
+function cloneImage(imageData){
+  let copia= ctx.createImageData(canvasWidth,canvasWidth);
+  for (var x = 0; x < canvasWidth; x++) {
+    for (var y = 0; y < canvasWidth; y++) {
+      let rgb =getPixel(imageData ,x,y);
+      setPixel(copia,x,y,rgb[0],rgb[1],rgb[2],255)
+    }
+  }
+  return copia;
+}
+
+function setPixel(imageData,x,y,r,g,b,a) {
+  index = (x + y * imageData.width) * 4;
+  imageData.data[index+0]=r;
+  imageData.data[index+1]=g;
+  imageData.data[index+2]=b;
+  imageData.data[index+3]=a;
+
+};
+//fin de Manejo de imagenes
