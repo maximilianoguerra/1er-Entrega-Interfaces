@@ -1,6 +1,19 @@
 body{
-  background-image: url("../img/fondoTablet.png");
+  background-image: url("../img/fondo2-3.jpg");
   background-size: cover;
 
  text-align: center;
+}
+.titulo{
+  /* text-align: center; */
+  color: white;
+}
+.btn{
+  margin-bottom:5px;
+}
+a {
+  color:blue;
+}
+.descarga{
+  background-color: white;
 }

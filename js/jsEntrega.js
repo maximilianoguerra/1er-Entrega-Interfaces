@@ -34,17 +34,17 @@ canvas.addEventListener('mousedown', function(event) {
     ajustY=22;
   }else if (goma) {
     color="#FFFFFF";
-    widthLine=5;
+    widthLine=10;
     ajustX =0;
     ajustY=22;
   }
-  xIni = event.clientX-ajustX;
-  yIni = event.clientY+ajustY;
+  xIni = event.layerX-ajustX;
+  yIni = event.layerY+ajustY;
 }, false);
 canvas.addEventListener('mousemove', function(event){
   if (pintar) {
-          xFin = event.clientX-ajustX;
-          yFin = event.clientY+ajustY;
+          xFin = event.layerX-ajustX;
+          yFin = event.layerY+ajustY;
           ctx.beginPath();
           ctx.moveTo(xIni, yIni);
           ctx.lineTo(xFin, yFin);
