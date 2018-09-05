@@ -21,7 +21,7 @@ $(document).on('click','#lapiz',function (event) {
   cambiarALapiz();
 });
 function cambiarALapiz() {
-  document.body.style.cursor =  "url(img/lapiz32p.png),auto";
+  canvas.style.cursor =  "url(img/lapiz32p.png),auto";
   lapiz=true;
   goma=false;
 }
@@ -30,8 +30,8 @@ canvas.addEventListener('mousedown', function(event) {
   if (lapiz) {
     color="#0A0A0A";
     widthLine=2;
-    ajustX =7;
-    ajustY=22;
+    ajustX =28;
+    ajustY=28;
   }else if (goma) {
     color="#FFFFFF";
     widthLine=10;
@@ -40,6 +40,9 @@ canvas.addEventListener('mousedown', function(event) {
   }
   xIni = event.layerX-ajustX;
   yIni = event.layerY+ajustY;
+}, false);
+canvas.addEventListener('mouseout', function(event){
+  pintar=false;
 }, false);
 canvas.addEventListener('mousemove', function(event){
   if (pintar) {
@@ -63,7 +66,7 @@ $(document).on('click','#goma',function (event) {
   cambiarAGoma();
 });
 function cambiarAGoma() {
-  document.body.style.cursor =  "url(img/goma-de-borrar32p.png),auto";
+  canvas.style.cursor =  "url(img/goma-de-borrar32p.png),auto";
   goma=true;
   lapiz=false;
 }
@@ -115,6 +118,10 @@ function myDrawImageMethod(image) {
     ctx.drawImage(image,0,0,image.width,canvasWidth);
   }
 };
+$(document).on('click','#resetLienzo',function (event) {
+  event.preventDefault();
+  canvasWithe(imageData);
+});
 $(document).on('click','#Restaurar',function (event) {
   event.preventDefault();
   canvasWithe(imageData);
