@@ -14,9 +14,17 @@ body{
 }
 a {
   color:blue;
-}
 
+}
+.tools{
+  background-color: #e6b800
+  /* margin-left: 15px; */
+}
 .descarga{
   background-color: #e6b800;
   margin-left: 15px;
+  margin-bottom: 15px;
+}
+h2{
+  background-color: #e6b800;
 }

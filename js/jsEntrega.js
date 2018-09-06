@@ -72,7 +72,7 @@ function cambiarAGoma() {
 }
 //Fin funcionalidad Paint
 var ctx = document.getElementById("canvas").getContext("2d");
-let imageData = ctx.createImageData(canvasWidth,canvasWidth);
+let imageData = ctx.createImageData(canvasWidth,canvasHeight);
 canvasWithe(imageData);
 function canvasWithe(imageData) {
   for (var x = 0; x < imageData.width; x++) {
@@ -106,20 +106,41 @@ $(document).on('submit','.formFiltrar', function(event){
       return image1;
   });
 function myDrawImageMethod(image) {
-  let imageData = ctx.createImageData(canvasWidth,canvasWidth);
+  let imageData = ctx.createImageData(canvasWidth,canvasHeight);
   canvasWithe(imageData)
-  if(image.width<canvasWidth && image.height<1000){
+  if(image.width<canvasWidth && image.height<canvasHeight){
+    $('#canvas').attr("width",image.width);
+    $('#canvas').attr("height",image.height);
     ctx.drawImage(image,0,0,image.width,image.height);
-  }else if (canvasWidth < image.width && 1000 < image.height) {
-    ctx.drawImage(image,0,0,canvasWidth,canvasWidth);
+  }else if (canvasWidth < image.width && canvasHeight < image.height) {
+    mantenerPropImg(image);
   }else if (canvasWidth < image.width) {
-    ctx.drawImage(image,0,0,canvasWidth,image.height);
+    mantenerPropImg(image)
   }else {
-    ctx.drawImage(image,0,0,image.width,canvasWidth);
+    mantenerPropImg(image);
   }
 };
+function mantenerPropImg(image) {
+  let anchoImg= image.width;
+  let altoImg= image.height;
+  let anchoCanvas= canvas.width;
+  let altoCanvas= canvas.height;
+  let aspectRatio= anchoImg/altoImg;
+  if(anchoImg>altoImg){
+    $('#canvas').attr("width",anchoCanvas);
+    $('#canvas').attr("height",anchoCanvas/aspectRatio);
+    ctx.drawImage(image, 0, 0, anchoCanvas, anchoCanvas/aspectRatio);
+  }
+  else{
+    $('#canvas').attr("width",altoCanvas*aspectRatio);
+    $('#canvas').attr("height",altoCanvas);
+    ctx.drawImage(image, 0, 0, altoCanvas*aspectRatio, altoCanvas);
+  }
+}
 $(document).on('click','#resetLienzo',function (event) {
   event.preventDefault();
+  $('#canvas').attr("width",canvasWidth);
+  $('#canvas').attr("height",canvasHeight);
   canvasWithe(imageData);
 });
 $(document).on('click','#Restaurar',function (event) {
@@ -237,14 +258,6 @@ class FiltroGris extends Filtro{
 }
 let filtroGris = new FiltroGris();
 
-class FiltroSuavisado extends Filtro{
-  FiltroSuavisado() {}
-  filterType(rgb) {
-    rgb[1]=rgb[2]+rgb[0]
-    return rgb;
-  }
-}
-let filtroSuavisado =new FiltroSuavisado();
 class FiltroAvanzados {
   FiltroAvanzados() {}
   filtroImg() {
