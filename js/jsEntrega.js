@@ -237,14 +237,6 @@ class FiltroGris extends Filtro{
 }
 let filtroGris = new FiltroGris();
 
-class FiltroSuavisado extends Filtro{
-  FiltroSuavisado() {}
-  filterType(rgb) {
-    rgb[1]=rgb[2]+rgb[0]
-    return rgb;
-  }
-}
-let filtroSuavisado =new FiltroSuavisado();
 class FiltroAvanzados {
   FiltroAvanzados() {}
   filtroImg() {
