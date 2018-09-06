@@ -3,6 +3,9 @@
   <head>
     <meta charset="utf-8">
     <title></title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Slab" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Permanent+Marker|Roboto+Slab" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Fredoka+One" rel="stylesheet">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" type="text/css" media="screen">
     <link rel="stylesheet" href="css/style.css" type="text/css" media="screen">
   </head>
@@ -12,18 +15,18 @@
           <h1>PaintPhotos</h1>
         </div>
         <div class="row">
-          <div class="col-xs-12 col-sm-12 col-md-8 col-md-offset-2 ">
+          <div class="col-xs-12 col-sm-12 col-md-8">
             <canvas id="canvas" width="700" height="700" style="border: 1px solid black" />
           </div>
-          <div class="col-xs-12 col-sm-12  col-md-2  titulo">
+          <div class="col-xs-12 col-sm-12  col-md-4  titulo">
               <h2>Heramientas y Filtros</h2>
-              <a href=""id="lapiz"><img src="img/lapiz32p.png" alt=""></a>
-              <a href=""id="goma"><img src="img/goma-de-borrar32p.png" alt=""></a>
+              <a href=""id="lapiz"><img src="img/lapiz2.cur" alt=""></a>
+              <a href=""id="goma"><img src="img/goma-de-borrar.cur" alt=""></a>
               <input class="btn btn-primary"type="button" name="" value="Limpiar Lienzo" id="resetLienzo">
               <form href="guardarImagenProducto" class="formFiltrar" enctype="multipart/form-data" value="">
                 <div class="form-group">
-                  <label for="consumo">Adjuntar Imagen</label>
-                  <input type="file" class="btn btn-primary" id="consumo" name="fotos[]"  value="" multiple required></input>
+                  <label for="foto"><h2>Adjuntar Imagen</h2></label>
+                  <input type="file" class="btn btn-primary" id="foto" name="fotos[]"  value="" multiple required></input>
                 </div>
                 <input type="submit" class="btn btn-primary" value="Agregar Imagen"></input>
               </form>
@@ -35,8 +38,8 @@
                 <input class="btn btn-primary"type="button" name="" value="Filtro Bordes" id="FilBordes">
                 <input class="btn btn-primary"type="button" name="" value="Filtro Blur" id="FilBlur">
                 <input class="btn btn-primary"type="button" name="" value="Restaurar Imagen" id="Restaurar">
-                <div class="row descarga">
-                  <div class="col-xs-12 col-sm-12 col-md-12">
+                <div class="row">
+                  <div class="col-xs-12 col-sm-12 col-md-6 descarga">
                     <a href="#" download="canvas.png" id="guardarImg">Descargar imagen</a>
                   </div>
                 </div>
