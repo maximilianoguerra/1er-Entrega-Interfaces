@@ -21,7 +21,7 @@ $(document).on('click','#lapiz',function (event) {
   cambiarALapiz();
 });
 function cambiarALapiz() {
-  canvas.style.cursor =  "url(img/lapiz32p.png),auto";
+  canvas.style.cursor =  "url(img/lapiz2.cur) 0 32,auto";
   lapiz=true;
   goma=false;
 }
@@ -30,13 +30,13 @@ canvas.addEventListener('mousedown', function(event) {
   if (lapiz) {
     color="#0A0A0A";
     widthLine=2;
-    ajustX =28;
-    ajustY=28;
+    ajustX =13;
+    ajustY=0;
   }else if (goma) {
     color="#FFFFFF";
-    widthLine=10;
-    ajustX =0;
-    ajustY=22;
+    widthLine=15;
+    ajustX =13;
+    ajustY=0;
   }
   xIni = event.layerX-ajustX;
   yIni = event.layerY+ajustY;
@@ -66,7 +66,7 @@ $(document).on('click','#goma',function (event) {
   cambiarAGoma();
 });
 function cambiarAGoma() {
-  canvas.style.cursor =  "url(img/goma-de-borrar32p.png),auto";
+  canvas.style.cursor =  "url(img/goma-de-borrar.cur) 0 20 ,auto";
   goma=true;
   lapiz=false;
 }
@@ -102,7 +102,7 @@ $(document).on('submit','.formFiltrar', function(event){
         imageBackup=this;
         myDrawImageMethod(this);
       };
-      $("#consumo").val("");
+      $("#foto").val("");
       return image1;
   });
 function myDrawImageMethod(image) {
@@ -155,6 +155,10 @@ $(document).on('click','#FilBordes',function (event) {
 $(document).on('click','#FilBlur',function (event) {
   event.preventDefault();
   filtroBlur.filtroImg();
+});
+$(document).on('click','#Filsuave',function (event) {
+  event.preventDefault();
+  filtroSuavisado.filtroImg();
 });
 $(document).on('click','#guardarImg',function (event) {
   // event.preventDefault();
@@ -232,6 +236,15 @@ class FiltroGris extends Filtro{
   }
 }
 let filtroGris = new FiltroGris();
+
+class FiltroSuavisado extends Filtro{
+  FiltroSuavisado() {}
+  filterType(rgb) {
+    rgb[1]=rgb[2]+rgb[0]
+    return rgb;
+  }
+}
+let filtroSuavisado =new FiltroSuavisado();
 class FiltroAvanzados {
   FiltroAvanzados() {}
   filtroImg() {
