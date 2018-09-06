@@ -19,10 +19,15 @@
             <canvas id="canvas" width="700" height="700" style="border: 1px solid black" />
           </div>
           <div class="col-xs-12 col-sm-12  col-md-4  titulo">
-              <h2>Heramientas y Filtros</h2>
-              <a href=""id="lapiz"><img src="img/lapiz2.cur" alt=""></a>
-              <a href=""id="goma"><img src="img/goma-de-borrar.cur" alt=""></a>
-              <input class="btn btn-primary"type="button" name="" value="Limpiar Lienzo" id="resetLienzo">
+              <h2>Heramientas</h2>
+              <div class="row ">
+                <div class="col-xs-12 col-sm-12 col-md-8 descarga">
+                  <a href=""id="lapiz"><img src="img/lapiz2.cur" alt=""></a>
+                  <a href=""id="goma"><img src="img/goma-de-borrar.cur" alt=""></a>
+                  <input class="btn btn-primary"type="button" name="" value="Limpiar Lienzo" id="resetLienzo">
+                </div>
+              </div>
+
               <form href="guardarImagenProducto" class="formFiltrar" enctype="multipart/form-data" value="">
                 <div class="form-group">
                   <label for="foto"><h2>Adjuntar Imagen</h2></label>
@@ -30,13 +35,14 @@
                 </div>
                 <input type="submit" class="btn btn-primary" value="Agregar Imagen"></input>
               </form>
-                <input class="btn btn-primary"type="button" name="" value="Filtro Brillo" id="FilBrillo">
-                <input class="btn btn-primary"type="button" name="" value="Filtro Negativo" id="FilNegativo">
-                <input class="btn btn-primary"type="button" name="" value="Filtro Binario" id="FilBinario">
-                <input class="btn btn-primary"type="button" name="" value="Filtro Sepia" id="FilSepia">
-                <input class="btn btn-primary"type="button" name="" value="Filtro Gris" id="FilGris">
-                <input class="btn btn-primary"type="button" name="" value="Filtro Bordes" id="FilBordes">
-                <input class="btn btn-primary"type="button" name="" value="Filtro Blur" id="FilBlur">
+              <h2>Filtros</h2>
+                <input class="btn btn-primary"type="button" name="" value="Brillo" id="FilBrillo">
+                <input class="btn btn-primary"type="button" name="" value="Negativo" id="FilNegativo">
+                <input class="btn btn-primary"type="button" name="" value="Binario" id="FilBinario">
+                <input class="btn btn-primary"type="button" name="" value="Sepia" id="FilSepia">
+                <input class="btn btn-primary"type="button" name="" value="Gris" id="FilGris">
+                <input class="btn btn-primary"type="button" name="" value="Bordes" id="FilBordes">
+                <input class="btn btn-primary"type="button" name="" value="Blur" id="FilBlur">
                 <input class="btn btn-primary"type="button" name="" value="Restaurar Imagen" id="Restaurar">
                 <div class="row">
                   <div class="col-xs-12 col-sm-12 col-md-6 descarga">
