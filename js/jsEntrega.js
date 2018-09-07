@@ -1,6 +1,7 @@
 let canvasWidth = 700;
 let canvasHeight = 700;
 let imageBackup = new Image();
+$(".toggle").hide();
 //variables para Paint
 let pintar = false;
 let borrar = false;
@@ -137,6 +138,14 @@ function mantenerPropImg(image) {
     ctx.drawImage(image, 0, 0, altoCanvas*aspectRatio, altoCanvas);
   }
 }
+$(document).on('click','#hide',function (event) {
+  event.preventDefault();
+  $(".toggle").hide();
+});
+$(document).on('click','#show',function (event) {
+  event.preventDefault();
+  $(".toggle").show();
+});
 $(document).on('click','#resetLienzo',function (event) {
   event.preventDefault();
   $('#canvas').attr("width",canvasWidth);
@@ -177,9 +186,9 @@ $(document).on('click','#FilBlur',function (event) {
   event.preventDefault();
   filtroBlur.filtroImg();
 });
-$(document).on('click','#Filsuave',function (event) {
+$(document).on('click','#FilSatur',function (event) {
   event.preventDefault();
-  filtroSuavisado.filtroImg();
+  filtroSaturacion.filtroImg();
 });
 $(document).on('click','#guardarImg',function (event) {
   // event.preventDefault();
@@ -202,6 +211,24 @@ class  Filtro {
   }
   filterType(rgb) {}
 }
+class FiltroSaturacion extends Filtro{
+  FiltroSaturacion() {}
+  filterType(rgb){
+    let color=rgb[0]+rgb[1]+rgb[2];
+    let aux = 0;
+    let pos;
+    for (var i = 0; i < rgb.length; i++) {
+      if(aux<((rgb[i]/color)*100)){
+        aux=rgb[i];
+        pos=i;
+      }
+    }
+    rgb[pos]=rgb[pos]+(rgb[pos]/100*10);
+    return rgb;
+  }
+}
+let filtroSaturacion = new FiltroSaturacion();
+
 class FiltroBrillo extends Filtro{
   FiltroBrillo() {}
   filterType(rgb){
