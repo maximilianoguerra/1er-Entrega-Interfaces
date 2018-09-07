@@ -5,7 +5,7 @@ body{
 .titulo{
   color: #3385ff;
   font-family: 'Roboto Slab', serif;
-
+  margin-top: 50px;
 }
 .btn{
   background-color: #e6b800;
@@ -17,13 +17,15 @@ a {
 
 }
 .tools{
-  background-color: #e6b800
+  margin-bottom: 50px;
+
   /* margin-left: 15px; */
 }
 .descarga{
   background-color: #e6b800;
   margin-left: 15px;
   margin-bottom: 15px;
+
 }
 h2{
   background-color: #e6b800;
