@@ -31,12 +31,12 @@ canvas.addEventListener('mousedown', function(event) {
   if (lapiz) {
     color="#0A0A0A";
     widthLine=2;
-    ajustX =70;
+    ajustX =15;
     ajustY=0;
   }else if (goma) {
     color="#FFFFFF";
     widthLine=15;
-    ajustX =60;
+    ajustX =0;
     ajustY=0;
   }
   xIni = event.layerX-ajustX;
