@@ -36,7 +36,7 @@ canvas.addEventListener('mousedown', function(event) {
   }else if (goma) {
     color="#FFFFFF";
     widthLine=15;
-    ajustX =0;
+    ajustX =15;
     ajustY=0;
   }
   xIni = event.layerX-ajustX;
