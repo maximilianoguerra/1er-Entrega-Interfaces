@@ -1,4 +1,4 @@
-let canvasWidth = 700;
+let canvasWidth = 1000;
 let canvasHeight = 700;
 let imageBackup = new Image();
 $(".toggle").hide();
@@ -22,7 +22,7 @@ $(document).on('click','#lapiz',function (event) {
   cambiarALapiz();
 });
 function cambiarALapiz() {
-  canvas.style.cursor =  "url(img/lapiz2.cur) 0 32,auto";
+  canvas.style.cursor =  "url(img/lapiz3.cur) 0 32,auto";
   lapiz=true;
   goma=false;
 }
@@ -31,12 +31,12 @@ canvas.addEventListener('mousedown', function(event) {
   if (lapiz) {
     color="#0A0A0A";
     widthLine=2;
-    ajustX =13;
+    ajustX =70;
     ajustY=0;
   }else if (goma) {
     color="#FFFFFF";
     widthLine=15;
-    ajustX =13;
+    ajustX =60;
     ajustY=0;
   }
   xIni = event.layerX-ajustX;
@@ -57,6 +57,7 @@ canvas.addEventListener('mousemove', function(event){
           xIni = xFin;
           yIni = yFin;
           ctx.stroke();
+          ctx.closePath();
         }
 }, false);
 canvas.addEventListener('mouseup', function(event){
@@ -67,7 +68,7 @@ $(document).on('click','#goma',function (event) {
   cambiarAGoma();
 });
 function cambiarAGoma() {
-  canvas.style.cursor =  "url(img/goma-de-borrar.cur) 0 20 ,auto";
+  canvas.style.cursor =  "url(img/goma-de-borrar2.cur) 0 20 ,auto";
   goma=true;
   lapiz=false;
 }
@@ -86,7 +87,7 @@ function canvasWithe(imageData) {
 
 
 //Manejo de imagenes
-$(document).on('submit','.formFiltrar', function(event){
+$(document).on('click','#agregarImg', function(event){
       event.preventDefault();
       let image1 = new Image();
       var file    = document.querySelector('input[type=file]').files[0];
@@ -155,7 +156,10 @@ $(document).on('click','#resetLienzo',function (event) {
 $(document).on('click','#Restaurar',function (event) {
   event.preventDefault();
   canvasWithe(imageData);
-  myDrawImageMethod(imageBackup);
+  if (imageBackup.height!=0) {
+      myDrawImageMethod(imageBackup);
+  }
+
 });
 $(document).on('click','#FilBrillo',function (event) {
   event.preventDefault();
@@ -186,10 +190,10 @@ $(document).on('click','#FilBlur',function (event) {
   event.preventDefault();
   filtroBlur.filtroImg();
 });
-$(document).on('click','#FilSatur',function (event) {
-  event.preventDefault();
-  filtroSaturacion.filtroImg();
-});
+// $(document).on('click','#FilSatur',function (event) {
+//   event.preventDefault();
+//   filtroSaturacion.filtroImg();
+// });
 $(document).on('click','#guardarImg',function (event) {
   // event.preventDefault();
   var canvas = $("#canvas")[0];
@@ -211,23 +215,23 @@ class  Filtro {
   }
   filterType(rgb) {}
 }
-class FiltroSaturacion extends Filtro{
-  FiltroSaturacion() {}
-  filterType(rgb){
-    let color=rgb[0]+rgb[1]+rgb[2];
-    let aux = 0;
-    let pos;
-    for (var i = 0; i < rgb.length; i++) {
-      if(aux<((rgb[i]/color)*100)){
-        aux=rgb[i];
-        pos=i;
-      }
-    }
-    rgb[pos]=rgb[pos]+(rgb[pos]/100*10);
-    return rgb;
-  }
-}
-let filtroSaturacion = new FiltroSaturacion();
+// class FiltroSaturacion extends Filtro{
+//   FiltroSaturacion() {}
+//   filterType(rgb){
+//     let color=rgb[0]+rgb[1]+rgb[2];
+//     let aux = 0;
+//     let pos;
+//     for (var i = 0; i < rgb.length; i++) {
+//       if(aux<((rgb[i]/color)*100)){
+//         aux=rgb[i];
+//         pos=i;
+//       }
+//     }
+//     rgb[pos]=rgb[pos]+(rgb[pos]/100*10);
+//     return rgb;
+//   }
+// }
+// let filtroSaturacion = new FiltroSaturacion();
 
 class FiltroBrillo extends Filtro{
   FiltroBrillo() {}
