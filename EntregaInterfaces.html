@@ -9,54 +9,59 @@
   </head>
   <body>
     <div class="container">
-        <div class="titulo">
-          <h1>PaintPhotos</h1>
-        </div>
+      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <h2>PaintPhotos</h2>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                  <a class="nav-link" href="#"id="lapiz"><img src="img/lapiz3.cur" alt=""></a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#"id="goma"><img src="img/goma-de-borrar2.cur" alt=""></a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#" id="resetLienzo">Limpiar Lienzo</a>
+                </li>
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Filtros
+                  </a>
+                  <div class="dropdown-menu btn btn-primary" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item btn btn-primary" href="#" id="FilBrillo">Brillo</a>
+                    <a class="dropdown-item btn btn-primary" href="#" id="FilNegativo">Negativo</a>
+                    <a class="dropdown-item btn btn-primary" href="#" id="FilBinario">Binario</a>
+                    <a class="dropdown-item btn btn-primary" href="#" id="FilSepia">Sepia</a>
+                    <a class="dropdown-item btn btn-primary" href="#" id="FilGris">Gris</a>
+                    <a class="dropdown-item btn btn-primary" href="#" id="FilBordes">Bordes</a>
+                    <a class="dropdown-item btn btn-primary" href="#" id="FilBlur">Blur</a>
+                    <!-- <a class="dropdown-item btn btn-primary" href="#" id="FilSatur">Saturacion</a> -->
+                  </div>
+                </li>
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Adjuntar Imagen
+                  </a>
+                  <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      <input type="file" class="btn btn-primary" id="foto" name="fotos[]"  value="" multiple required></input>
+                      <a class="dropdown-item btn btn-primary"href="#" id="agregarImg">Agregar Imagen</a>
+                  </div>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link"  href="#"id="Restaurar">Restaurar Imagen</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link"  href="#" download="canvas.png" id="guardarImg">Descargar Imagen</a>
+                </li>
+              </ul>
+            </div>
+          </nav>
         <div class="row">
-          <div class="col-xs-12 col-sm-12 col-md-8">
-            <canvas id="canvas" width="700" height="700" style="border: 1px solid black" />
-          </div>
-          <div class="col-xs-12 col-sm-12  col-md-4  titulo">
-              <h2>Heramientas</h2>
-              <div class="row tools">
-                <div class="col-xs-12 col-sm-12 col-md-8 descarga">
-                  <a href=""id="lapiz"><img src="img/lapiz2.cur" alt=""></a>
-                  <a href=""id="goma"><img src="img/goma-de-borrar.cur" alt=""></a>
-                  <input class="btn btn-primary"type="button" name="" value="Limpiar Lienzo" id="resetLienzo">
-                </div>
-              </div>
-              <div class="row tools">
-                <div class="col-xs-12 col-sm-12 col-md-12 ">
-                    <form href="guardarImagenProducto" class="formFiltrar" enctype="multipart/form-data" value="">
-                      <div class="form-group">
-                        <label for="foto"><h2>Adjuntar Imagen</h2></label>
-                        <input type="file" class="btn btn-primary" id="foto" name="fotos[]"  value="" multiple required></input>
-                      </div>
-                      <input type="submit" class="btn btn-primary" value="Agregar Imagen"></input>
-                    </form>
-                  </div>
-              </div>
-              <h2>Filtros</h2>
-              <div class="row">
-                <div class="col-xs-12 col-sm-12 col-md-12">
-                    <input class="btn btn-primary " type="button" name="" value="Ocultar" id="hide">
-                    <input class="btn btn-primary "type="button" name="" value="Mostrar" id="show">
-                </div>
-              </div>
-                <input class="btn btn-primary toggle" type="button" name="" value="Brillo" id="FilBrillo">
-                <input class="btn btn-primary toggle" type="button" name="" value="Negativo" id="FilNegativo">
-                <input class="btn btn-primary toggle" type="button" name="" value="Binario" id="FilBinario">
-                <input class="btn btn-primary toggle" type="button" name="" value="Sepia" id="FilSepia">
-                <input class="btn btn-primary toggle" type="button" name="" value="Gris" id="FilGris">
-                <input class="btn btn-primary toggle" type="button" name="" value="Bordes" id="FilBordes">
-                <input class="btn btn-primary toggle" type="button" name="" value="Blur" id="FilBlur">
-                <input class="btn btn-primary toggle" type="button" name="" value="Saturacion" id="FilSatur">
-                <input class="btn btn-primary toggle" type="button" name="" value="Restaurar Imagen" id="Restaurar">
-                <div class="row">
-                  <div class="col-xs-12 col-sm-12 col-md-6 descarga">
-                    <a href="#" download="canvas.png" id="guardarImg">Descargar imagen</a>
-                  </div>
-                </div>
+          <div class="col-xs-12 col-sm-12 col-md-12">
+            <canvas id="canvas" width="1000" height="700" style="border: 1px solid black" />
           </div>
           </div>
       </div>
@@ -65,5 +70,6 @@
   src="https://code.jquery.com/jquery-3.3.1.min.js"
   integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
   crossorigin="anonymous"></script>
+  <script  src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
   <script type="text/javascript" src="js/jsEntrega.js"></script>
 </html>

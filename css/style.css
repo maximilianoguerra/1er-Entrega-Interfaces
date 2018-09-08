@@ -1,5 +1,5 @@
 body{
-  background-image: url("../img/fondo3.jpg");
+  background-image: url("../img/fondo8.jpg");
   background-size: cover;
 }
 .titulo{
@@ -8,25 +8,29 @@ body{
   margin-top: 50px;
 }
 .btn{
-  background-color: #e6b800;
-  margin-bottom:5px;
-  color: #3385ff;
+  background-color: #8a8a8a;
+  border-color: #8a8a8a;
+  color: #000000;
 }
-a {
-  color:blue;
+.btn:hover{
+  background-color: #8a8a8a;
+}
+.row{
+  padding-top: 50px;
+  text-align: center;
+}
+.bg-light{
+  background-color:  #8a8a8a!important;
+  font-family: 'Roboto Slab', serif;
 
 }
-.tools{
-  margin-bottom: 50px;
-
-  /* margin-left: 15px; */
+.navbar-light .navbar-nav .nav-link{
+  color: #000000;
 }
-.descarga{
-  background-color: #e6b800;
-  margin-left: 15px;
-  margin-bottom: 15px;
-
+.dropdown-item:hover{
+  background-color: #282828;
+  color: #FFFFFF;
 }
-h2{
-  background-color: #e6b800;
+.dropdown-menu{
+  background-color: #8a8a8a;
 }
